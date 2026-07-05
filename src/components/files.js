@@ -1,61 +1,68 @@
-import React, { useContext } from 'react';
-import styled, { ThemeContext } from 'styled-components';
-// import { CloseIcon } from 'Icons/icons';
-import renderIcons from './rendericons';
+import React from 'react';
+import { 
+  FileCode, FileJson, FileText, Settings, X 
+} from 'lucide-react';
 
-const File = styled.div`
-  background: ${(props) => (props.isOpen ? props.theme.selection : props.theme.bg)};
-  /* padding-top: 5px; */
-  cursor: pointer;
-  font-weight: 400;
-  width: 175px;
-  align-items: center;
-  min-width: 150px;
-  min-height: 28px;
-  ${(props) => (props.isOpen ? `border-top : ${props.theme.border} 1px solid` : null)};
-  ${(props) => (!props.isOpen ? 'border-right :1px  black solid' : null)};
-  ${(props) => (!props.isOpen ? 'border-bottom :1px black  solid' : null)};
-`;
+const getFileIcon = (file) => {
+  const ext = file.split('.').pop();
+  switch (ext) {
+    case 'md':
+      return <FileText className="text-sky-400 mr-1.5 shrink-0" size={13} />;
+    case 'json':
+      return <FileJson className="text-amber-500 mr-1.5 shrink-0" size={13} />;
+    case 'env':
+      return <Settings className="text-zinc-400 mr-1.5 shrink-0" size={13} />;
+    case 'tsx':
+    case 'jsx':
+    case 'js':
+    case 'test.js':
+      return <FileCode className="text-yellow-500 mr-1.5 shrink-0" size={13} />;
+    case 'java':
+      return <FileCode className="text-red-400 mr-1.5 shrink-0" size={13} />;
+    case 'pdf':
+      return <FileText className="text-rose-500 mr-1.5 shrink-0" size={13} />;
+    default:
+      return <FileText className="text-zinc-400 mr-1.5 shrink-0" size={13} />;
+  }
+};
 
-const FileContent = styled.div`
-  padding: 8px 5px;
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-`;
-const GroupText = styled.div`
-  padding-left: 5px;
-`;
-// const GroupIcon = styled.div`
-//   transform: scale(0.75);
-// `;
-
-const Files = ({ openFile, changeCurrentFile }) => {
-  const Theme = useContext(ThemeContext);
-
+const Files = ({ openFiles = [], openFile, changeCurrentFile, closeFile }) => {
   return (
     <>
-      {['html', 'css', 'js', 'json'].map((file) => (
-        <File
-          onClick={() => changeCurrentFile(file)}
-          key={file}
-          theme={{ ...Theme }}
-          isOpen={openFile === file}
-        >
-          <FileContent isOpen={openFile === file}>
-            {renderIcons(file)}
-            <GroupText>
-              index.
-              {file}
-            </GroupText>
-            {/* <GroupIcon> */}
-            {/* {openFile === file ? <CloseIcon /> : null} */}
-            {/* </GroupIcon> */}
-          </FileContent>
-        </File>
-      ))}
+      {openFiles.map((filePath) => {
+        const isOpen = openFile === filePath;
+        // Display just the filename, not the full path
+        const fileName = filePath.split('/').pop();
+        
+        return (
+          <div
+            onClick={() => changeCurrentFile(filePath)}
+            key={filePath}
+            className={`group relative cursor-pointer font-normal px-3 py-1.5 flex items-center justify-between border-r border-[#1e1e1e] select-none text-xs transition duration-150 h-[35px] ${
+              isOpen
+                ? 'bg-[#1e1e1e] text-white border-t-2 border-[#007acc]'
+                : 'bg-[#2d2d2d] text-zinc-400 hover:bg-[#2b2b2b] hover:text-zinc-200'
+            }`}
+            style={{ minWidth: '120px', maxWidth: '180px' }}
+          >
+            <div className="flex items-center min-w-0 mr-4">
+              {getFileIcon(filePath)}
+              <span className="truncate">{fileName}</span>
+            </div>
+            
+            {/* Close button */}
+            <button
+              className="p-0.5 rounded hover:bg-zinc-800 text-zinc-500 hover:text-white shrink-0"
+              onClick={(e) => {
+                e.stopPropagation();
+                closeFile(filePath);
+              }}
+            >
+              <X size={12} />
+            </button>
+          </div>
+        );
+      })}
     </>
   );
 };

@@ -1,59 +1,27 @@
-import React, { useContext } from 'react';
-import styled, { ThemeContext } from 'styled-components';
-
-const SearchWrapper = styled.div`
-  width: ${(props) => `${props.paneWidth}px`};
-  height: 100%;
-  background-color: ${(props) => props.theme.explorer};
-  color: white;
-  font-weight: 300;
-  font-size: 15px;
-`;
-const Title = styled.div`
-  display: flex;
-  font-weight: 400;
-  font-size: 12px;
-  justify-content: space-between;
-  padding: 6px;
-`;
-
-const PaneName = styled.span`
-  padding-left: 10px;
-`;
-
-const SearchInput = styled.input`
-  background-color: ${(props) => props.theme.selection};
-  border: 1px ${(props) => props.theme.background};
-  margin: 5px 10px;
-  height: 25px;
-  &::placeholder{
-    padding-left :5px;
-    color : ${(props) => props.theme.comment}
-  }
-
-  &:focus {
-    outline: ${(props) => props.theme.bottomBar} 1px solid;
-
-  }
-`;
-const InputWrapper = styled.div`
-  display: flex;
-  justify-content: space-around;
-  flex-direction: column;
-`;
+import React from 'react';
 
 const SearchPane = ({ paneWidth }) => {
-  const theme = useContext(ThemeContext);
   return (
-    <SearchWrapper paneWidth={paneWidth} theme={{ ...theme }}>
-      <Title>
-        <PaneName>SEARCH</PaneName>
-      </Title>
-      <InputWrapper>
-        <SearchInput placeholder="Search" />
-        <SearchInput placeholder="Replace" />
-      </InputWrapper>
-    </SearchWrapper>
+    <div
+      className="h-full bg-[#29292a] text-white font-light text-[15px]"
+      style={{ width: paneWidth }}
+    >
+      <div className="flex font-normal text-[12px] justify-between p-1.5">
+        <span className="pl-[10px]">SEARCH</span>
+      </div>
+      <div className="flex justify-around flex-col">
+        <input
+          type="text"
+          placeholder="Search"
+          className="bg-[#202020] border border-[#272823] my-[5px] mx-[10px] h-[25px] pl-[5px] text-white text-sm placeholder-[#8a8a8a] focus:outline focus:outline-[1px] focus:outline-[#2e84d5]"
+        />
+        <input
+          type="text"
+          placeholder="Replace"
+          className="bg-[#202020] border border-[#272823] my-[5px] mx-[10px] h-[25px] pl-[5px] text-white text-sm placeholder-[#8a8a8a] focus:outline focus:outline-[1px] focus:outline-[#2e84d5]"
+        />
+      </div>
+    </div>
   );
 };
 

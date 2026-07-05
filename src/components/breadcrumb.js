@@ -1,38 +1,33 @@
 import React from 'react';
-import styled from 'styled-components';
-import { ArrowIcon } from 'Icons/icons';
 
-const BreadCrumbWrapper = styled.div`
-  height: 16px;
-  width: calc(100% - 5px);
-  background: ${(props) => props.theme.selection};
-  display: flex;
-  padding: 13px;
-  box-sizing: border-box;
-`;
+const BreadCrumb = ({ openFile }) => {
+  if (!openFile) {
+    return (
+      <div className="h-[24px] bg-[#1e1e1e] flex items-center px-4 border-b border-[#151515] select-none" />
+    );
+  }
 
-const Path = styled.div`
-  display: flex;
-  padding: 0px 2px;
-  align-items: center;
-`;
+  const parts = openFile.split('/');
 
-const PathName = styled.div``;
-const BreadCrumb = ({ openFile }) => (
-  <>
-    <BreadCrumbWrapper>
-      <Path>
-        <PathName>contents</PathName>
-        <ArrowIcon />
-      </Path>
-      <Path>
-        <PathName>
-          index.
-          {openFile}
-        </PathName>
-      </Path>
-    </BreadCrumbWrapper>
-  </>
-);
+  return (
+    <div className="h-[24px] bg-[#1e1e1e] flex items-center px-4 text-[11px] text-zinc-400 border-b border-[#151515] select-none overflow-hidden whitespace-nowrap font-mono">
+      <span className="hover:text-white cursor-pointer">het-patel-portfolio</span>
+      {parts.map((part, index) => (
+        <React.Fragment key={index}>
+          <span className="mx-1.5 text-zinc-600 text-[10px]">&gt;</span>
+          <span 
+            className={
+              index === parts.length - 1 
+                ? 'text-zinc-300 font-semibold' 
+                : 'hover:text-zinc-200 cursor-pointer'
+            }
+          >
+            {part}
+          </span>
+        </React.Fragment>
+      ))}
+    </div>
+  );
+};
 
 export default BreadCrumb;

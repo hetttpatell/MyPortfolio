@@ -1,107 +1,67 @@
-import React, { useContext } from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { Files, Search, GitBranch, Play, Blocks, User, Settings } from 'lucide-react';
 
-const NavWrapper = styled.div`
-  background: white;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  min-width: 50px;
-  height: auto;
-  background: ${(props) => (props.theme.leftnav ? props.theme.leftnav : null)};
-  border-right : ${(props) =>  ` 1px ${props.theme.explorer} solid`}
-`;
-const NavItem = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 48px;
-  width: 100%;
-  ${(props) => (props.isCurrent ? `border-left: ${props.theme.border} 2px solid;` : null)}
-  background: ${(props) => (props.theme.leftnav ? props.theme.leftnav : null)};
-`;
+const renderIcon = (iconName, isCurrent) => {
+  const activeColor = isCurrent ? 'text-white' : 'text-zinc-500 hover:text-zinc-300';
+  const size = 20;
 
-const renderIcon = (icon, theme, isOpen) => {
-  switch (icon) {
-    case 'search':
-      return (
-        <div
-          className="codicon codicon-search"
-          style={{
-            fontSize: '28px',
-            color: `${isOpen === 'search' ? 'white' : theme.comment}`,
-            fontWeight: '200',
-          }}
-        />
-      );
-    case 'git':
-      return (
-        <div
-          className="codicon codicon-source-control"
-          style={{
-            fontSize: '28px',
-            color: `${isOpen === 'git' ? 'white' : theme.comment}`,
-            fontWeight: '200',
-          }}
-        />
-      );
-    case 'debugger':
-      return (
-        <div
-          className="codicon codicon-debug-alt"
-          style={{
-            fontSize: '28px',
-            color: `${isOpen === 'debugger' ? 'white' : theme.comment}`,
-            fontWeight: '200',
-          }}
-        />
-      );
-    case 'extension':
-      return (
-        <div
-          className="codicon codicon-extensions"
-          style={{
-            fontSize: '28px',
-            color: `${isOpen === 'extension' ? 'white' : theme.comment}`,
-            fontWeight: '200',
-          }}
-        />
-      );
+  switch (iconName) {
     case 'files':
-      return (
-        <div
-          className="codicon codicon-files"
-          style={{
-            fontSize: '28px',
-            color: `${isOpen === 'files' ? 'white' : theme.comment}`,
-            fontWeight: '200',
-          }}
-        />
-      );
+      return <Files size={size} className={activeColor} />;
+    case 'search':
+      return <Search size={size} className={activeColor} />;
+    case 'git':
+      return <GitBranch size={size} className={activeColor} />;
+    case 'debugger':
+      return <Play size={size} className={activeColor} />;
+    case 'extension':
+      return <Blocks size={size} className={activeColor} />;
     default:
       return null;
   }
 };
+
 const LeftNav = () => {
-  const theme = useContext(ThemeContext);
   const location = useLocation();
+  const currentPath = location.pathname.slice(1) || 'files'; // Default to files if empty
+
   return (
-    <NavWrapper theme={theme}>
-      {['files', 'search', 'git', 'debugger', 'extension'].map((option) => (
-        <Link
-          key={option}
-          to={location.pathname.slice(1) === option ? '/' : option}
-        >
-          <NavItem
-            theme={theme}
-            isCurrent={location.pathname.slice(1) === option}
-          >
-            {renderIcon(option, theme, location.pathname.slice(1))}
-          </NavItem>
-        </Link>
-      ))}
-    </NavWrapper>
+    <div className="bg-[#333333] flex flex-col items-center justify-between w-[50px] h-full border-r border-[#1e1e1e] select-none shrink-0 py-2">
+      
+      {/* Top Navigation Items */}
+      <div className="flex flex-col items-center w-full space-y-2">
+        {['files', 'search', 'git', 'debugger', 'extension'].map((option) => {
+          const isCurrent = currentPath === option;
+          return (
+            <Link
+              key={option}
+              to={isCurrent ? '/' : `/${option}`}
+              className="w-full flex justify-center"
+            >
+              <div
+                className={`flex justify-center items-center h-12 w-full transition-all duration-150 relative cursor-pointer ${
+                  isCurrent ? 'border-l-2 border-[#007acc] bg-[#252526]/50' : 'hover:bg-[#2d2d2d]'
+                }`}
+              >
+                {renderIcon(option, isCurrent)}
+              </div>
+            </Link>
+          );
+        })}
+      </div>
+
+      {/* Bottom Profile and Settings Gear */}
+      <div className="flex flex-col items-center w-full space-y-1 mt-auto">
+        <div className="flex justify-center items-center h-10 w-full hover:bg-[#2d2d2d] cursor-pointer text-zinc-500 hover:text-zinc-300 transition duration-150">
+          <User size={20} />
+        </div>
+        <div className="flex justify-center items-center h-10 w-full hover:bg-[#2d2d2d] cursor-pointer text-zinc-500 hover:text-zinc-300 transition duration-150">
+          <Settings size={20} />
+        </div>
+      </div>
+
+    </div>
   );
 };
 

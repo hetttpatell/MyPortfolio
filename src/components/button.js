@@ -1,19 +1,11 @@
-import React, { useContext } from 'react';
-import styled, { ThemeContext } from 'styled-components';
-
-const ButtonWrapper = styled.button`
-background-color :${(props) => props.theme.button};
-color: white;
-padding : 5px 10px;
-border: none;
-`;
+import React from 'react';
 
 const Button = ({ children }) => {
-  const theme = useContext(ThemeContext);
   return (
-    <ButtonWrapper theme={{ ...theme }}>
+    <button className="bg-[#6a737d] text-white px-2.5 py-1 border-none cursor-pointer hover:bg-[#586069] transition-colors text-sm">
       {children}
-    </ButtonWrapper>
+    </button>
   );
 };
+
 export default Button;

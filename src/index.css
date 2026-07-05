@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-base: #0d0d0f;
+  --bg-surface: #17181b;
+  --bg-surface-raised: #1f2023;
+  --accent-rust: #B94F2A;
+  --accent-rust-soft: #D97A54;
+  --text-primary: #F2EFEA;
+  --text-muted: #9A9A9E;
+  --border-hairline: #2A2B2E;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+}
+
+/* VS Code editor files need to keep Source Sans 3 or Monaco */
+.vscode-editor-font {
+  font-family: 'Source Sans 3', sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Custom styles for CodeEditor */
+.CodeEditor {
+  width: 100%;
+  overflow: hidden;
+  margin: 0 !important;
+  padding: 0 !important;
+  height: 100%;
+}
+
+/* Hide scrollbar utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Background grid utility */
+.bg-grid-pattern {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, rgba(42, 43, 46, 0.4) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(42, 43, 46, 0.4) 1px, transparent 1px);
+}

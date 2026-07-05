@@ -1,0 +1,36 @@
+{
+  "frontend": [
+    "HTML5 / CSS3",
+    "JavaScript (ES6+)",
+    "TypeScript",
+    "React.js",
+    "Next.js",
+    "Tailwind CSS",
+    "GSAP",
+    "Three.js",
+    "Framer Motion"
+  ],
+  "backend": [
+    "Node.js",
+    "Express.js",
+    "Java (Android SDK)"
+  ],
+  "database": [
+    "PostgreSQL",
+    "Supabase RLS",
+    "Firebase Database",
+    "Redis Cache"
+  ],
+  "tools": [
+    "Git & GitHub",
+    "Vite Bundler",
+    "npm / yarn",
+    "Postman API",
+    "VS Code"
+  ],
+  "other": [
+    "TensorFlow Lite (YAMNet)",
+    "Gemini API Integration",
+    "Lenis Smooth Scrolling"
+  ]
+}
