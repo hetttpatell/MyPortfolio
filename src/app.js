@@ -8,12 +8,12 @@ const App = () => (
     <div className="h-full w-full bg-black text-white flex flex-col">
       <Switch>
         {/* Standalone portfolio homepage */}
-        <Route exact path="/">
+        <Route exact path="/portfolio">
           <Portfolio />
         </Route>
         
         {/* VS Code clone workspace */}
-        <Route path={["/files", "/search", "/git", "/debugger", "/extension"]}>
+        <Route path={["/", "/files", "/search", "/git", "/debugger", "/extension"]}>
           <div className="h-full w-full select-none">
             <VSCode />
           </div>
